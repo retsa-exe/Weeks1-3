@@ -10,6 +10,11 @@ public class horseControl : MonoBehaviour
     //horse speed
     public float speed = -3f;
 
+    //
+    public float amplitude = 0.5f;
+    //
+    public float frequency = 2f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +29,11 @@ public class horseControl : MonoBehaviour
         {
             //get horse position
             Vector2 pos = transform.position;
-            //move the horse every frame
+            //move the horse in x direction every frame
             pos.x += speed * Time.deltaTime;
+
+            //add y direction movement
+            pos.y = amplitude * Mathf.Sin(Time.time * frequency);
 
             //reverse the direction when reach the edge of the box
             if (pos.x < -3 || pos.x > 3)
