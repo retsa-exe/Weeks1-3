@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class horseControl : MonoBehaviour
 {
+    //get handle script to check if the box is running
+    public handleControl handle;
+
     //horse speed
     public float speed = -3f;
 
@@ -16,18 +19,23 @@ public class horseControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //get horse position
-        Vector2 pos = transform.position;
-        //move the horse every frame
-        pos.x += speed * Time.deltaTime;
-
-        //reverse the direction when reach the edge of the box
-        if (pos.x < -3 || pos.x > 3)
+        //check if the box is running
+        if (handle.isRunning)
         {
-            speed = speed * -1;
-        }
+            //get horse position
+            Vector2 pos = transform.position;
+            //move the horse every frame
+            pos.x += speed * Time.deltaTime;
 
-        //assign the position back to horse
-        transform.position = pos;
+            //reverse the direction when reach the edge of the box
+            if (pos.x < -3 || pos.x > 3)
+            {
+                speed = speed * -1;
+                transform.localScale = new Vector2(-transform.localScale.x, transform.localScale.y);
+            }
+
+            //assign the position back to horse
+            transform.position = pos;
+        }
     }
 }
