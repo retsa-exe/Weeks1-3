@@ -35,7 +35,7 @@ public class lidControl : MonoBehaviour
         //change the target position
         if (lid)
         {
-            targetPos = new Vector2(0, 0);
+            targetPos = new Vector2(0, 0.5f);
         }
         else
         {
