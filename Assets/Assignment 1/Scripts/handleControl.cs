@@ -11,9 +11,13 @@ public class handleControl : MonoBehaviour
     float startTime;
 
     //aniamtion duration
-    public float duration = 5f;
+    public float duration = 1f;
 
-    
+    //the range of handle moving
+    public float moveRange = 5f;
+
+    //handle animation curve
+    public AnimationCurve handleCurve;
 
     // Start is called before the first frame update
     void Start()
@@ -35,10 +39,27 @@ public class handleControl : MonoBehaviour
             startTime = Time.time;
         }
 
-        //set isRunning to flase after 5 sec
-        if (isRunning && Time.time - startTime >= duration)
+        //play handle animation
+        if (isRunning)
         {
-            isRunning = false;
+            //set isRunning to false after 5 sec
+            if (Time.time - startTime >= duration)
+            {
+                isRunning = false;
+            }
+            else
+            {
+                //normalize animation time
+                float t = (Time.time - startTime) / duration;
+                //get curved value from the animation curve
+                float curveValue = handleCurve.Evaluate(t);
+
+                //calculate the value changed
+                float yPos = Mathf.Lerp(-moveRange, moveRange, curveValue);
+
+                //move the habdle by asign a new vector
+                transform.localPosition = new Vector2(transform.localPosition.x, yPos - 2.5f);
+            }
         }
     }
 }
